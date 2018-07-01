@@ -7,8 +7,12 @@ Flask Server
 @copyright: jogchat.com
 """
 
+import json
 import argcomplete, argparse
+from newsutils.config import SRCS
+from newsutils.query import queryFromSrc
 from newsutils.extractor import extractFromSrc, extractFromUrl
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--src", type=str, default="")
@@ -23,6 +27,9 @@ if __name__ == "__main__":
     if o.src:
         for src in o.src.split(","):
             extractFromSrc(src)
-    if o.url:
+    elif o.url:
         for url in o.url.split(","):
             extractFromUrl(url)
+    else:
+        for src in SRCS:
+            queryFromSrc(SRCS[src])
